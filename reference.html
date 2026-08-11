@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <title>AIAgentFirewall — Reference</title>
-<meta name="description" content="Architecture, every command and flag, the full 59-detection catalogue and framework mappings.">
+<meta name="description" content="Architecture, every command and flag, the full 61-detection catalogue and framework mappings.">
 <style>
 /* Self-hosted so the site makes zero third-party requests.
    Inter & Space Grotesk — SIL Open Font License 1.1, latin subset. */
@@ -405,7 +405,7 @@ pre.code .k{color:var(--cyan);font-weight:600}
 
         <!-- TIERS -->
         <h2 class="sec" id="tiers">The four defense tiers</h2>
-        <p class="lead">Modelled on a real firewall's layered stack. The first three read artifacts and never execute them; the runtime tier controls what a running process can reach and say.</p>
+        <p class="lead">A <b>Zero Trust</b> architecture — <em>never trust, always verify</em> — modelled on a real firewall's layered stack. The three principles map onto the tiers: <b>explicit verification</b> (Static + Provenance), <b>least privilege</b> (default-deny egress + scope), and <b>assume breach</b> (Runtime containment). The first three read artifacts and never execute them; the runtime tier controls what a running process can reach and say.</p>
         <div class="tbl-scroll">
           <table>
             <thead><tr><th>Tier</th><th>What it does</th><th>Entry point</th></tr></thead>
@@ -680,6 +680,7 @@ pre.code .k{color:var(--cyan);font-weight:600}
         <h2 class="sec" id="frameworks">Framework glossary</h2>
         <p class="lead">Every finding cites at least one industry framework, so findings map to a language security teams already use.</p>
         <div class="gloss">
+          <div class="gl"><b>Zero Trust security model</b> <code>Never trust, always verify</code><p>The enterprise architecture this tool is built on — explicit verification, least-privilege access, and assume-breach. The four defense tiers are how those three principles are enforced for AI agents you install or ship.</p></div>
           <div class="gl"><b>OWASP Top 10 for LLM Apps</b> <code>OWASP-LLM01…10</code><p>The canonical LLM-application risk list — prompt injection, sensitive-information disclosure, improper output handling, data/model poisoning, vector-and-embedding weaknesses, excessive agency, and more.</p></div>
           <div class="gl"><b>OWASP Top 10 for Agentic Apps (2026)</b> <code>OWASP-ASI01…10</code><p>The agent-specific list: tool misuse, identity/privilege abuse, unexpected code execution, memory-and-context poisoning, insecure inter-agent communication, and related agentic threats.</p></div>
           <div class="gl"><b>OWASP Agentic Skills Top 10</b> <code>OWASP-AST01…10</code><p>The taxonomy for the <em>skill-execution</em> layer specifically — goal hijack, tool misuse, identity/privilege abuse, agentic supply chain, unexpected code execution, memory poisoning, insecure inter-agent communication. Distinct from ASI, and the layer AgentFirewall scans directly.</p></div>

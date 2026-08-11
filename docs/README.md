@@ -44,7 +44,7 @@ output. After adding or changing detections, regenerate the numbers with:
 afw rules --format json
 ```
 
-and update the rule rows, the `59 detections / 23 categories` counts in
+and update the rule rows, the `61 detections / 24 categories` counts in
 `reference.html`, and the stat strip in `index.html`.
 
 ## The Markdown docs
