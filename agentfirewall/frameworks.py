@@ -73,3 +73,18 @@ SUPPLY_TYPOSQUATTING = "Supply-Chain:Typosquatting"
 SUPPLY_SLOPSQUATTING = "Supply-Chain:Slopsquatting"
 SUPPLY_KNOWN_MALICIOUS = "Threat-Intel:Known-Malicious-IoC"
 SUPPLY_REVOKED_SIGNER = "Threat-Intel:Revoked-Signer"
+# Steering an agent away from the official package registry toward an
+# attacker-controlled source (raw GitHub release, direct clone) so that registry
+# integrity/provenance checks never apply.
+SUPPLY_REGISTRY_BYPASS = "Supply-Chain:Registry-Bypass"
+
+# --- OWASP Agentic Skills Top 10 (AST10) ------------------------------------- #
+# A taxonomy for the skill-execution layer specifically, distinct from ASI01-10.
+# https://owasp.org/www-project-agentic-skills-top-10/
+AST_GOAL_HIJACK = "OWASP-AST01:Agent-Goal-Hijack"
+AST_TOOL_MISUSE = "OWASP-AST02:Tool-Misuse-and-Exploitation"
+AST_PRIVILEGE_ABUSE = "OWASP-AST03:Identity-and-Privilege-Abuse"
+AST_SUPPLY_CHAIN = "OWASP-AST04:Agentic-Supply-Chain"
+AST_CODE_EXECUTION = "OWASP-AST05:Unexpected-Code-Execution"
+AST_MEMORY_POISONING = "OWASP-AST06:Memory-and-Context-Poisoning"
+AST_INTER_AGENT = "OWASP-AST07:Insecure-Inter-Agent-Communication"
