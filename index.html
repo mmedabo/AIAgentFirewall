@@ -158,6 +158,19 @@ h1.mega .w.lit{
   color:var(--text-dim);
 }
 .hero-sub b{color:var(--text);font-weight:600}
+.creed{margin:24px auto 0;font-family:var(--font-mono);
+  font-size:clamp(.82rem,1.8vw,1.05rem);letter-spacing:.02em;line-height:1.5;color:var(--cyan)}
+.creed b{font-weight:700;color:#fff}
+.creed .dim{color:var(--text-dim)}
+/* zero-trust principles */
+.zt{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px}
+@media(max-width:760px){.zt{grid-template-columns:1fr}}
+.zt .p{border:1px solid var(--line);border-radius:13px;padding:18px 18px 16px;
+  background:linear-gradient(165deg,rgba(255,255,255,.035),rgba(255,255,255,.006))}
+.zt .p .k{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cyan);font-weight:650}
+.zt .p h4{font-family:var(--font-display);font-weight:700;letter-spacing:-.02em;font-size:1.08rem;margin:9px 0 6px}
+.zt .p p{color:var(--text-dim);font-size:.92rem;margin:0;line-height:1.5}
+.zt .p .maps{display:block;margin-top:11px;font-family:var(--font-mono);font-size:.71rem;color:var(--text-mute)}
 
 .cta-wrap{margin-top:40px;display:flex;flex-direction:column;align-items:center;gap:16px}
 .btn-primary{
@@ -421,6 +434,8 @@ footer{border-top:1px solid var(--line);padding:52px 0 60px;position:relative;z-
       <span class="w">Scan</span><span class="w">Before</span><span class="w lit">Trust</span>
     </h1>
 
+    <p class="creed"><b>Never trust, always verify.</b> <span class="dim">Even your own agents.</span></p>
+
     <p class="hero-sub">
       Every agent, skill and MCP server you install is <b>a stranger's code running as you</b>.
       This inspects it before it lands, contains it while it runs, and gives you one clear answer.
@@ -527,9 +542,30 @@ footer{border-top:1px solid var(--line);padding:52px 0 60px;position:relative;z-
 <section id="layers">
   <div class="wrap">
     <div class="rv">
-      <span class="sec-tag">Defense in depth</span>
-      <h2>Four layers, like a <span class="em">real firewall</span>.</h2>
-      <p class="sec-lede">The first three read without executing. The fourth doesn't need to trust the code at all — it controls what the running process can reach.</p>
+      <span class="sec-tag">Zero Trust · defense in depth</span>
+      <h2>Never trust. <span class="em">Always verify.</span></h2>
+      <p class="sec-lede">The same model enterprise security runs on — applied to the AI agents you install and the ones you ship. Three principles, enforced by four layers.</p>
+    </div>
+
+    <div class="zt rv">
+      <div class="p">
+        <span class="k">Explicit verification</span>
+        <h4>Prove it, don't trust it</h4>
+        <p>Every artifact is read before it runs, its provenance weighed, and unsigned or unknown sources are held to a stricter bar automatically. Nothing is trusted just because it's popular or already installed.</p>
+        <span class="maps">→ layers 01 Static · 02 Stateful · 03 Provenance</span>
+      </div>
+      <div class="p">
+        <span class="k">Least privilege access</span>
+        <h4>Only what it needs</h4>
+        <p>Default-deny egress, wildcard-permission (<code>tools: *</code>) detection, and per-tool scope keep an agent to exactly the reach its job requires — and nothing more.</p>
+        <span class="maps">→ egress allowlist · permission overreach · scope policy</span>
+      </div>
+      <div class="p">
+        <span class="k">Assume breach</span>
+        <h4>Contain what runs</h4>
+        <p>The runtime layer trusts the code with nothing: a kernel-level network jail and live MCP inspection contain a payload that slips past the static tiers, so one bad artifact can't reach your keys or the network.</p>
+        <span class="maps">→ layer 04 Runtime · <code>afw run --isolate</code></span>
+      </div>
     </div>
 
     <div class="rail">
@@ -542,8 +578,8 @@ footer{border-top:1px solid var(--line);padding:52px 0 60px;position:relative;z-
     <div class="bento" style="margin-top:16px">
       <div class="cell span6 rv">
         <div class="statrow">
-          <div class="s"><div class="n">59</div><div class="l">detections</div></div>
-          <div class="s"><div class="n">23</div><div class="l">threat categories</div></div>
+          <div class="s"><div class="n">61</div><div class="l">detections</div></div>
+          <div class="s"><div class="n">24</div><div class="l">threat categories</div></div>
           <div class="s"><div class="n">4</div><div class="l">defense tiers</div></div>
           <div class="s"><div class="n">0</div><div class="l">dependencies</div></div>
           <div class="s"><div class="n">0</div><div class="l">data sent anywhere</div></div>
@@ -572,7 +608,7 @@ footer{border-top:1px solid var(--line);padding:52px 0 60px;position:relative;z-
       <a class="lcard rv" href="reference.html">
         <span class="n">Layer 03 · Reference</span>
         <h3>The full reference</h3>
-        <p>Architecture, every command and flag, the complete 59-detection catalogue and framework mappings.</p>
+        <p>Architecture, every command and flag, the complete 61-detection catalogue and framework mappings.</p>
         <span class="go">Open the reference <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
       </a>
     </div>

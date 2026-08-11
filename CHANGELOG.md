@@ -37,6 +37,11 @@ Agentic Skills Top 10 (AST10)** crosswalk (`AST01–AST07`) for the skill-execut
 layer, alongside the existing OWASP LLM/ASI, MITRE ATLAS, MCP and SLSA mappings.
 Detection catalogue: **61 detections across 24 categories** (was 59/23).
 
+**Zero Trust framing.** The site, README and threat model now present the tool
+through the Zero Trust security model — *never trust, always verify, even your own
+agents* — mapping its three principles (explicit verification, least-privilege
+access, assume breach) onto the four defense tiers.
+
 ## [1.3.3] — Precision, continued
 
 Continues the precision work from 1.3.2, driven by dogfooding the scanner against

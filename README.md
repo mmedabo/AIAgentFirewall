@@ -2,6 +2,8 @@
 
 **A security firewall for AI agents, skills, and MCP servers. Scan before you install.**
 
+> **Never trust, always verify — even your own agents.**
+
 [![CI](https://github.com/mmedabo/AIAgentFirewall/actions/workflows/ci.yml/badge.svg)](https://github.com/mmedabo/AIAgentFirewall/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Python 3.9+](https://img.shields.io/badge/python-3.9%2B-blue.svg)](https://www.python.org/)
@@ -23,8 +25,12 @@ AgentFirewall protects both directions of that trust:
   users (excessive agency, broken authorization), both by scanning your code and by
   an embeddable runtime guardrail.
 
-It works like a real firewall: layered defenses, default-deny where it counts, and
-a clear, auditable report of exactly why.
+It works like a real firewall, on the **Zero Trust** model enterprise security
+already runs on — *never trust, always verify*. Its three principles map onto the
+defense tiers: **explicit verification** (read and weigh every artifact before it
+runs), **least privilege** (default-deny egress and scoped permissions), and
+**assume breach** (contain what does run) — with a clear, auditable report of
+exactly why.
 
 > No cloud. No API keys. No telemetry. It runs 100% locally with **zero required
 > dependencies**, so you can trust the thing that checks your trust.

@@ -66,6 +66,19 @@ built to mirror that stack for AI artifacts:
 | Threat-intel feeds | Known-bad IoCs | Pluggable malicious name/domain/hash/signer feeds (`AFW-IOC-*`) | ✅ shipped |
 | Policy/rulebase | Ordered ruleset | `Policy` (thresholds, ignore, categories, trust tightening) | ✅ shipped |
 
+This is a **Zero Trust** design — *never trust, always verify* — and its three
+principles map directly onto the tiers:
+
+- **Explicit verification** — nothing is trusted for being popular or already
+  installed. Every artifact is read (static) and its provenance weighed; unsigned /
+  unknown sources are held to a stricter policy (trust tiers).
+- **Least privilege access** — default-deny egress, wildcard-permission
+  (`tools: *`) detection, and per-tool scope keep an agent to exactly the reach its
+  job needs.
+- **Assume breach** — the runtime tier trusts the code with nothing: a kernel-level
+  network jail and MCP tool-call proxy contain a payload that slips past the static
+  tiers.
+
 The three tiers, in defence-in-depth order:
 
 ```
