@@ -46,7 +46,10 @@ jobs:
         run: |
           python -m agentfirewall scan examples/signed-skill --format json \
             | python -c "import json,sys; d=json.load(sys.stdin); assert d['trust_tier']=='Declared', d['trust_tier']"
-          python -m agentfirewall scan examples/malicious-skill --format json \
+          # The bundled seed is a demo feed (opt-in via --intel), not loaded by
+          # default -- so pass it explicitly to exercise the IoC domain match.
+          python -m agentfirewall scan examples/malicious-skill \
+            --intel agentfirewall/data/intel/seed.json --format json \
             | python -c "import json,sys; d=json.load(sys.stdin); ids={f['rule_id'] for f in d['findings']}; assert 'AFW-IOC-003' in ids, ids"
           echo "trust tier and IoC feed working"
       - name: Self-check (runtime egress firewall)
