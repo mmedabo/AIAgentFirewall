@@ -171,6 +171,9 @@ h1.mega .w.lit{
 .zt .p h4{font-family:var(--font-display);font-weight:700;letter-spacing:-.02em;font-size:1.08rem;margin:9px 0 6px}
 .zt .p p{color:var(--text-dim);font-size:.92rem;margin:0;line-height:1.5}
 .zt .p .maps{display:block;margin-top:11px;font-family:var(--font-mono);font-size:.71rem;color:var(--text-mute)}
+.zt .p .note{display:block;margin-top:11px;padding-top:10px;border-top:1px dashed var(--line);
+  font-size:.79rem;line-height:1.45;color:var(--text-mute)}
+.zt .p .note b{color:var(--text-dim);font-weight:600}
 
 .cta-wrap{margin-top:40px;display:flex;flex-direction:column;align-items:center;gap:16px}
 .btn-primary{
@@ -553,6 +556,7 @@ footer{border-top:1px solid var(--line);padding:52px 0 60px;position:relative;z-
         <h4>Prove it, don't trust it</h4>
         <p>Every artifact is read before it runs, its provenance weighed, and unsigned or unknown sources are held to a stricter bar automatically. Nothing is trusted just because it's popular or already installed.</p>
         <span class="maps">→ layers 01 Static · 02 Stateful · 03 Provenance</span>
+        <span class="note"><b>Honest scope:</b> by default we detect that a signature exists (tier <em>Declared</em>). Cryptographic verification (tier <em>Verified</em>) is opt-in via <code>--verify-signatures</code> with cosign.</span>
       </div>
       <div class="p">
         <span class="k">Least privilege access</span>
@@ -565,6 +569,7 @@ footer{border-top:1px solid var(--line);padding:52px 0 60px;position:relative;z-
         <h4>Contain what runs</h4>
         <p>The runtime layer trusts the code with nothing: a kernel-level network jail and live MCP inspection contain a payload that slips past the static tiers, so one bad artifact can't reach your keys or the network.</p>
         <span class="maps">→ layer 04 Runtime · <code>afw run --isolate</code></span>
+        <span class="note"><b>Honest scope:</b> the bypass-proof jail needs Linux with <code>unshare</code> privileges. Without them it falls back to a proxy-level allowlist — weaker, and stated as such.</span>
       </div>
     </div>
 
