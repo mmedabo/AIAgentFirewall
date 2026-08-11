@@ -445,12 +445,17 @@ MEMORY_POISONING = PatternRule(
         ),
         compile_sig(
             "AFW-MEM-002", "Modifies agent / MCP configuration", S.HIGH,
-            r"(>>?|open\s*\(|write_text)\s*[^\n]{0,40}"
-            r"(\.mcp\.json|claude_desktop_config\.json|\.claude/settings|"
-            r"\.config/[\w-]*(claude|cursor|cline)|\.continue/config)",
-            "Writes into agent or MCP configuration, which can silently add servers, "
-            "tools or permissions.",
-            "Do not let an installed artifact rewrite agent/MCP configuration.",
+            r"(>>?|open\s*\(|write_text|fs\.(append|write)file\w*|cp\s|mv\s|tee\s)"
+            r"[^\n]{0,40}"
+            r"(\.mcp\.json|claude_desktop_config\.json|\.claude/settings|\.claude/hooks|"
+            r"\.config/[\w-]*(claude|cursor|cline)|\.continue/config|"
+            r"\.vscode/(tasks|settings)\.json|\.cursor/)",
+            "Writes into agent / editor-agent configuration or a hook file — a persistence "
+            "vector that auto-runs when the editor or agent session opens the checkout, "
+            "and that survives even a valid supply-chain provenance check.",
+            "Do not let an installed artifact write agent/MCP/editor hook configuration. "
+            "Treat writes to these paths as high-risk regardless of the package's provenance.",
+            references=(F.ATLAS_PERSISTENCE, F.AGENTIC_MEMORY_POISONING, F.LLM03_SUPPLY_CHAIN),
         ),
     ],
 )
@@ -548,6 +553,40 @@ RAG_POISONING = PatternRule(
 )
 
 # --------------------------------------------------------------------------- #
+# 12b. Registry-bypass / anti-verification (agentic supply chain)
+#      Trojanized skills tell the agent to fetch the payload from an attacker's
+#      GitHub release rather than the real npm/PyPI package, so registry
+#      integrity and provenance checks never apply. Steering an agent AWAY from
+#      the official registry is itself the tell.
+# --------------------------------------------------------------------------- #
+SUPPLY_CHAIN = PatternRule(
+    id="supply-chain",
+    category="supply-chain",
+    default_references=(F.SUPPLY_REGISTRY_BYPASS, F.AST_SUPPLY_CHAIN, F.LLM03_SUPPLY_CHAIN),
+    signatures=[
+        compile_sig(
+            "AFW-SUPPLY-001", "Steers install away from the package registry", S.HIGH,
+            r"(?:do\s*n[o']?t|don't|never|avoid|instead\s+of|rather\s+than|no\s+need\s+to)"
+            r"\s+(?:use\s+|run\s+|using\s+|running\s+)?"
+            r"(?:npm\s+install|npx\b|pip3?\s+install|yarn\s+add|pnpm\s+(?:add|install)|"
+            r"the\s+(?:npm|pypi|package)\s+registr|install\s+from\s+(?:npm|pypi|the\s+registry))"
+            r"|(?:only|real|true|actual)\s+source\s+of\s+truth\s+is\s+(?:the\s+)?"
+            r"(?:github|repo(?:sitory)?|release|clone)"
+            r"|(?:install|download|get|fetch)\s+(?:it\s+|this\s+|directly\s+)?"
+            r"from\s+(?:the\s+)?(?:github\s+release|attacker|our\s+release|"
+            r"the\s+repo(?:sitory)?\s+directly)"
+            r"|clone\s+(?:the\s+)?repo(?:sitory)?\s+(?:directly\s+)?"
+            r"(?:instead|rather\s+than|not\s+from)",
+            "Instructs the agent to install from a raw code source (a GitHub release or a "
+            "direct clone) instead of the official package registry — bypassing registry "
+            "integrity, signing and provenance checks. A hallmark of trojanized skills.",
+            "Install dependencies only from the official registry (npm/PyPI). Treat any "
+            "instruction to fetch a payload from a release or clone as untrusted.",
+        ),
+    ],
+)
+
+# --------------------------------------------------------------------------- #
 # 13. Insecure inter-agent / A2A communication (OWASP ASI07)
 #     A2A advertises capabilities via "agent cards" but does not mandate that
 #     they be authenticated or signature-verified — enabling agent impersonation
@@ -580,6 +619,26 @@ INTER_AGENT = PatternRule(
             "impersonate a trusted agent or shadow its card to infiltrate the workflow.",
             "Never disable agent-card signature/identity verification for peer agents.",
         ),
+        compile_sig(
+            "AFW-A2A-003", "Agent-card content injection", S.HIGH,
+            r"(?i)\"(?:description|skills?|instructions?|summary)\"\s*:\s*(?:\"|\[)"
+            r"[^\n]{0,200}?"
+            r"(ignore\s+(?:all\s+)?(?:previous|prior|above)|"
+            r"disregard\s+(?:the\s+)?(?:system|previous)|"
+            r"you\s+must\s+(?:always\s+)?(?:route|use|call|prefer|read|send)|"
+            r"do\s+not\s+(?:tell|mention|inform)|<\s*important\s*>|"
+            r"always\s+(?:route|prefer|choose|select)\s+(?:all\s+)?(?:tasks?\s+)?(?:to\s+)?(?:this|me)|"
+            r"route\s+all\s+(?:tasks?|requests?)\s+to)",
+            "An A2A agent card embeds imperative instructions in its natural-language "
+            "description/skills fields — 'tool poisoning' at the inter-agent layer, which "
+            "hijacks an orchestrator's LLM-based routing before any tool is even called.",
+            "Agent-card description/skills fields must describe capabilities, not instruct "
+            "the reader. Strip imperative or persuasive-routing language from cards.",
+            requires_also=r"(?i)a2a|agent2agent|agent[_-]?card|\.well-known/agent|"
+            r"agent-to-agent|\"skills\"\s*:|\"capabilities\"|\"defaultInputModes\"",
+            references=(F.AGENTIC_INTER_AGENT, F.MCP_TOOL_POISONING, F.LLM01_PROMPT_INJECTION,
+                        F.AST_INTER_AGENT),
+        ),
     ],
 )
 
@@ -587,5 +646,5 @@ INTER_AGENT = PatternRule(
 PATTERN_RULES = [
     SECRETS, NETWORK, OBFUSCATION, DESTRUCTIVE, FILESYSTEM,
     EMBEDDED_SECRETS, DESERIALIZATION, OUTPUT_HANDLING, ANTI_FORENSICS,
-    MEMORY_POISONING, AGENT_AGENCY, RAG_POISONING, INTER_AGENT,
+    MEMORY_POISONING, AGENT_AGENCY, RAG_POISONING, SUPPLY_CHAIN, INTER_AGENT,
 ]

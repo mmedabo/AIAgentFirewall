@@ -6,6 +6,37 @@ All notable changes to AgentFirewall are documented here. This project follows
 
 ## [Unreleased]
 
+## [1.4.0] — Research-driven detections
+
+Three new detections drawn from live 2026 agent-security incidents, each aimed at
+a technique current static scanners tend to miss. All are locked in by
+`tests/test_research_batch.py`, and no example verdict changes.
+
+- **Registry-bypass / anti-verification** (`AFW-SUPPLY-001`, new `supply-chain`
+  category): flags skill/doc instructions that steer an agent *away* from the
+  official package registry toward a raw source — "don't `npm install`, clone the
+  repo directly", "the GitHub release is the only source of truth". This is the
+  bypass behind the trojanized skills.sh packages, where the malicious payload was
+  fetched from an attacker's GitHub release so registry integrity and provenance
+  checks never applied.
+- **Agent-hook-file persistence** (`AFW-MEM-002`, extended): now flags writes to
+  `.vscode/tasks.json`, `.vscode/settings.json`, `.claude/hooks/*` and `.cursor/`
+  in addition to the agent/MCP config paths it already covered. These files
+  auto-run when an editor or agent session opens the checkout — a persistence
+  vector that survives a valid supply-chain provenance check (the Keyv npm-worm
+  pattern). The finding is emitted regardless of provenance; trust tier only
+  adjusts the policy verdict, never suppresses it.
+- **A2A Agent-Card content injection** (`AFW-A2A-003`): applies the tool-poisoning
+  scan to an agent card's natural-language `description`/`skills` fields, catching
+  imperative or persuasive-routing text ("ignore previous instructions", "always
+  route all tasks to this agent") that hijacks an orchestrator's LLM-based routing
+  before any tool is called. Gated on A2A context so unrelated JSON is unaffected.
+
+Also: new framework references `Supply-Chain:Registry-Bypass` and an **OWASP
+Agentic Skills Top 10 (AST10)** crosswalk (`AST01–AST07`) for the skill-execution
+layer, alongside the existing OWASP LLM/ASI, MITRE ATLAS, MCP and SLSA mappings.
+Detection catalogue: **61 detections across 24 categories** (was 59/23).
+
 ## [1.3.3] — Precision, continued
 
 Continues the precision work from 1.3.2, driven by dogfooding the scanner against
@@ -232,7 +263,8 @@ package to Production/Stable, and is the first tagged/published version.
 - `scan` / `verify` / `install` / `watch` / `rules`; ALLOW/WARN/BLOCK policy;
   text / JSON / SARIF output. MIT licensed, zero required dependencies.
 
-[Unreleased]: https://github.com/mmedabo/AIAgentFirewall/compare/v1.3.3...HEAD
+[Unreleased]: https://github.com/mmedabo/AIAgentFirewall/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/mmedabo/AIAgentFirewall/releases/tag/v1.4.0
 [1.3.3]: https://github.com/mmedabo/AIAgentFirewall/releases/tag/v1.3.3
 [1.3.2]: https://github.com/mmedabo/AIAgentFirewall/releases/tag/v1.3.2
 [1.3.1]: https://github.com/mmedabo/AIAgentFirewall/releases/tag/v1.3.1

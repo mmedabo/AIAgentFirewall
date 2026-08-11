@@ -480,16 +480,16 @@ pre.code .k{color:var(--cyan);font-weight:600}
 
         <!-- CATALOGUE -->
         <h2 class="sec" id="catalogue">Detection catalogue</h2>
-        <p class="lead">All <b>59 detections</b> across <b>23 categories</b>, each mapped to an industry framework. IDs ending in <span class="inline">-*</span> are structural rules that emit a family of findings; <span class="inline">varies</span> means severity depends on what's matched.</p>
+        <p class="lead">All <b>61 detections</b> across <b>24 categories</b>, each mapped to an industry framework. IDs ending in <span class="inline">-*</span> are structural rules that emit a family of findings; <span class="inline">varies</span> means severity depends on what's matched.</p>
         <div class="filter">
-  <input id="q" type="search" placeholder="Filter 59 detections — try &quot;ssh&quot;, &quot;exfil&quot;, &quot;AFW-MEM&quot;, &quot;prompt&quot;…" aria-label="Filter detections">
+  <input id="q" type="search" placeholder="Filter 61 detections — try &quot;ssh&quot;, &quot;exfil&quot;, &quot;AFW-MEM&quot;, &quot;prompt&quot;…" aria-label="Filter detections">
   <div class="fchips" role="group" aria-label="Filter by severity">
     <button class="fchip" data-sev="c" aria-pressed="false">CRITICAL</button>
     <button class="fchip" data-sev="h" aria-pressed="false">HIGH</button>
     <button class="fchip" data-sev="m" aria-pressed="false">MEDIUM</button>
     <button class="fchip" data-sev="v" aria-pressed="false">VARIES</button>
   </div>
-  <span class="fcount" id="fcount"><b>23</b> categories · <b>59</b> detections</span>
+  <span class="fcount" id="fcount"><b>24</b> categories · <b>61</b> detections</span>
 </div>
 <p class="noresult" id="noresult">No detection matches that filter.</p>
 <div class="catgrid">
@@ -642,12 +642,19 @@ pre.code .k{color:var(--cyan);font-weight:600}
 <div class="rule" data-row="1"><code class="rid">AFW-RAG-001</code><span class="rttl">Untrusted content written into a vector store / KB</span><span class="sev m">MEDIUM</span><span class="refs"><span class="ref">OWASP-LLM08:Vector-and-Embedding-Weaknesses</span><span class="ref">OWASP-ASI06:Memory-and-Context-Poisoning</span></span></div>
 <div class="rule" data-row="1"><code class="rid">AFW-RAG-002</code><span class="rttl">Unvalidated web documents indexed into RAG</span><span class="sev m">MEDIUM</span><span class="refs"><span class="ref">OWASP-LLM08:Vector-and-Embedding-Weaknesses</span><span class="ref">OWASP-ASI06:Memory-and-Context-Poisoning</span></span></div>
 </div></div>
-<div class="cat" data-s="insecure inter-agent (a2a) 2 no-auth agent cards, disabled signature checks afw-a2a-001 agent-to-agent endpoint declared without authentication high owasp-asi07:insecure-inter-agent-communication owasp-asi03:identity-and-privilege-abuse afw-a2a-002 inter-agent identity/signature verification disabled high owasp-asi07:insecure-inter-agent-communication owasp-asi03:identity-and-privilege-abuse" data-sev="h">
-<div class="cat-head"><h3>Insecure inter-agent (A2A)</h3><span class="cat-count">2</span></div>
+<div class="cat" data-s="registry bypass (supply chain) 1 steers install away from the official registry toward a raw release or clone afw-supply-001 steers install away from the package registry high supply-chain:registry-bypass owasp-ast04:agentic-supply-chain owasp-llm03:supply-chain" data-sev="h">
+<div class="cat-head"><h3>Registry bypass (supply chain)</h3><span class="cat-count">1</span></div>
+<p class="cat-desc">"Don't npm install — clone the repo / use the GitHub release" (the trojanized-skill tell)</p>
+<div class="rule-list">
+<div class="rule" data-row="1"><code class="rid">AFW-SUPPLY-001</code><span class="rttl">Steers install away from the package registry</span><span class="sev h">HIGH</span><span class="refs"><span class="ref">Supply-Chain:Registry-Bypass</span><span class="ref">OWASP-AST04:Agentic-Supply-Chain</span><span class="ref">OWASP-LLM03:Supply-Chain</span></span></div>
+</div></div>
+<div class="cat" data-s="insecure inter-agent (a2a) 3 no-auth agent cards, disabled signature checks, agent-card content injection afw-a2a-001 agent-to-agent endpoint declared without authentication high owasp-asi07:insecure-inter-agent-communication owasp-asi03:identity-and-privilege-abuse afw-a2a-002 inter-agent identity/signature verification disabled high owasp-asi07:insecure-inter-agent-communication owasp-asi03:identity-and-privilege-abuse afw-a2a-003 agent-card content injection high owasp-asi07:insecure-inter-agent-communication mcp:tool-poisoning owasp-llm01:prompt-injection owasp-ast07:insecure-inter-agent-communication" data-sev="h">
+<div class="cat-head"><h3>Insecure inter-agent (A2A)</h3><span class="cat-count">3</span></div>
 <p class="cat-desc">No-auth agent cards, disabled signature checks</p>
 <div class="rule-list">
 <div class="rule" data-row="1"><code class="rid">AFW-A2A-001</code><span class="rttl">Agent-to-agent endpoint declared without authentication</span><span class="sev h">HIGH</span><span class="refs"><span class="ref">OWASP-ASI07:Insecure-Inter-Agent-Communication</span><span class="ref">OWASP-ASI03:Identity-and-Privilege-Abuse</span></span></div>
 <div class="rule" data-row="1"><code class="rid">AFW-A2A-002</code><span class="rttl">Inter-agent identity/signature verification disabled</span><span class="sev h">HIGH</span><span class="refs"><span class="ref">OWASP-ASI07:Insecure-Inter-Agent-Communication</span><span class="ref">OWASP-ASI03:Identity-and-Privilege-Abuse</span></span></div>
+<div class="rule" data-row="1"><code class="rid">AFW-A2A-003</code><span class="rttl">Agent-card content injection</span><span class="sev h">HIGH</span><span class="refs"><span class="ref">OWASP-ASI07:Insecure-Inter-Agent-Communication</span><span class="ref">MCP:Tool-Poisoning</span><span class="ref">OWASP-LLM01:Prompt-Injection</span><span class="ref">OWASP-AST07:Insecure-Inter-Agent-Communication</span></span></div>
 </div></div>
 <div class="cat" data-s="rug pulls (stateful) 1 files/tools/permissions changed since baseline afw-drift-* baseline drift / rug pull (--baseline) varies mcp:rug-pull owasp-asi03:identity-and-privilege-abuse" data-sev="v">
 <div class="cat-head"><h3>Rug pulls (stateful)</h3><span class="cat-count">1</span></div>
@@ -675,6 +682,7 @@ pre.code .k{color:var(--cyan);font-weight:600}
         <div class="gloss">
           <div class="gl"><b>OWASP Top 10 for LLM Apps</b> <code>OWASP-LLM01…10</code><p>The canonical LLM-application risk list — prompt injection, sensitive-information disclosure, improper output handling, data/model poisoning, vector-and-embedding weaknesses, excessive agency, and more.</p></div>
           <div class="gl"><b>OWASP Top 10 for Agentic Apps (2026)</b> <code>OWASP-ASI01…10</code><p>The agent-specific list: tool misuse, identity/privilege abuse, unexpected code execution, memory-and-context poisoning, insecure inter-agent communication, and related agentic threats.</p></div>
+          <div class="gl"><b>OWASP Agentic Skills Top 10</b> <code>OWASP-AST01…10</code><p>The taxonomy for the <em>skill-execution</em> layer specifically — goal hijack, tool misuse, identity/privilege abuse, agentic supply chain, unexpected code execution, memory poisoning, insecure inter-agent communication. Distinct from ASI, and the layer AgentFirewall scans directly.</p></div>
           <div class="gl"><b>MITRE ATLAS</b> <code>MITRE-ATLAS:*</code><p>Adversarial tactics &amp; techniques for AI systems — Credential-Access, Execution, Exfiltration, Defense-Evasion, Impact — the ATT&amp;CK analogue for ML.</p></div>
           <div class="gl"><b>MCP threat research</b> <code>MCP:*</code><p>Model Context Protocol failure modes — tool poisoning and the rug-pull class where a tool's behavior or description mutates after approval.</p></div>
           <div class="gl"><b>SLSA / supply chain</b> <code>SLSA:*</code><p>Supply-chain integrity levels — provenance, signed vs. unsigned artifacts, build integrity.</p></div>
@@ -743,7 +751,7 @@ guard.check_tool_call(<span class="k">"send_email"</span>, {<span class="k">"bod
       <code>pip install AIAgentFirewall</code>
       <a href="https://pypi.org/project/AIAgentFirewall/">PyPI</a>
       <a href="https://github.com/mmedabo/AIAgentFirewall">GitHub</a>
-      <span>MIT · v1.3.3</span>
+      <span>MIT · v1.4.0</span>
     </div>
   </div>
 </footer>
