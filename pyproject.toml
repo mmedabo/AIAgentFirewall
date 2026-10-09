@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentbench"
+version = "0.1.0"
+description = "An operational benchmark for AI agents — latency, cost and token usage."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+keywords = ["ai", "agents", "benchmark", "llm", "evaluation", "latency", "cost"]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.scripts]
+agentbench = "agentbench.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["agentbench*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

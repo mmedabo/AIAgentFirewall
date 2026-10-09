@@ -1,0 +1,22 @@
+[
+  {
+    "id": "summarize-doc",
+    "prompt": "Summarize the attached quarterly report into five bullet points for an executive audience."
+  },
+  {
+    "id": "multi-step-research",
+    "prompt": "Find the three most recent papers on retrieval-augmented generation, then compare their evaluation methods in a short table."
+  },
+  {
+    "id": "tool-use-calc",
+    "prompt": "Given a CSV of monthly sales, compute the quarter-over-quarter growth rate and plot it."
+  },
+  {
+    "id": "code-fix",
+    "prompt": "The failing test test_login expects a 401 on a bad password but gets a 500. Find and fix the bug."
+  },
+  {
+    "id": "email-triage",
+    "prompt": "Triage the last 20 support emails into billing, bug, and feature-request buckets and draft one reply per bucket."
+  }
+]
