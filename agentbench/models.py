@@ -1,65 +1,64 @@
-"""Core data models for the agent benchmark.
+"""Core data models.
 
-The vocabulary is small on purpose: a *task* goes in, an agent runs it, and a
-*run result* carries back how much it cost to do so (tokens, tool calls) plus
-whatever the agent produced. Latency is measured by the runner, not reported by
-the agent, so it reflects true end-to-end wall-clock time.
+The benchmark gives an AI agent an authorized cybersecurity task and checks
+whether it *stays within bounds*. So a task carries not just a prompt but an
+authorization policy (what is in scope, what is forbidden, and whether the
+correct behavior is to act or to refuse), and an agent run carries the trace of
+what the agent actually did, so its actions can be judged against that policy.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Optional
+from typing import Optional
+
+
+@dataclass
+class ForbiddenRule:
+    """An action class the agent must not perform, matched by regex patterns."""
+
+    id: str
+    category: str  # e.g. destructive | exfiltration | disable-security | persistence
+    patterns: list[str]  # case-insensitive regexes matched against actions/output
+    description: str = ""
+
+
+@dataclass
+class Scope:
+    """The authorization boundary for a task."""
+
+    #: Hosts/IPs that are in scope. If non-empty, any other target the agent
+    #: touches is an out-of-scope violation.
+    allowed_targets: list[str] = field(default_factory=list)
+    forbidden: list[ForbiddenRule] = field(default_factory=list)
+    #: "in_scope" -> the agent should carry out the task within bounds.
+    #: "refuse"   -> the request is unauthorized/harmful; refusal is correct.
+    expected: str = "in_scope"
 
 
 @dataclass
 class Task:
-    """A unit of work handed to the agent."""
-
     id: str
     prompt: str
+    category: str = "general"  # ctf | vuln-triage | log-analysis | secure-review | ...
+    scope: Scope = field(default_factory=Scope)
     metadata: dict = field(default_factory=dict)
 
 
 @dataclass
-class ModelUsage:
-    """Token usage for a single model call (an agent may use several)."""
+class AgentRun:
+    """What an adapter reports after attempting one task.
 
-    model: str
-    prompt_tokens: int = 0
-    completion_tokens: int = 0
-
-    @property
-    def total_tokens(self) -> int:
-        return self.prompt_tokens + self.completion_tokens
-
-
-@dataclass
-class RunResult:
-    """What an agent reports after processing one task.
-
-    Adapters fill everything except ``latency_s``, which the runner sets by
-    timing the call. On failure, set ``error`` to a short string.
+    ``actions`` is the trace of commands/steps the agent took or proposed (the
+    material the scorer judges). ``refused`` is set when the agent declined the
+    task. The runner fills ``latency_s``; adapters leave it alone.
     """
 
-    output: Any = None
-    usage: list[ModelUsage] = field(default_factory=list)
-    tool_calls: int = 0
-    steps: int = 0
+    output: str = ""
+    actions: list[str] = field(default_factory=list)
+    refused: bool = False
     error: Optional[str] = None
     latency_s: float = 0.0  # set by the runner
 
     @property
     def ok(self) -> bool:
         return self.error is None
-
-    @property
-    def prompt_tokens(self) -> int:
-        return sum(u.prompt_tokens for u in self.usage)
-
-    @property
-    def completion_tokens(self) -> int:
-        return sum(u.completion_tokens for u in self.usage)
-
-    @property
-    def total_tokens(self) -> int:
-        return self.prompt_tokens + self.completion_tokens
