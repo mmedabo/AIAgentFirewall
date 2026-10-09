@@ -1,0 +1,16 @@
+{
+  "id": "vulnerable-agent-app",
+  "title": "Deployed agent with excessive agency and broken authorization",
+  "artifact": "../../../examples/vulnerable-agent-app",
+  "label": "malicious",
+  "threat_classes": [
+    "excessive-agency",
+    "authorization",
+    "obfuscation"
+  ],
+  "source": "afw-examples",
+  "provenance": "First-party seed case authored by the AFW maintainers. Supplement with independent/community cases before headline neutral claims.",
+  "references": [
+    "OWASP-AGENTIC"
+  ]
+}

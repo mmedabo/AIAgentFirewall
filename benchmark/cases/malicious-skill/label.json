@@ -1,0 +1,21 @@
+{
+  "id": "malicious-skill",
+  "title": "Skill with curl|bash installer, secret theft and exfiltration",
+  "artifact": "../../../examples/malicious-skill",
+  "label": "malicious",
+  "threat_classes": [
+    "secret-access",
+    "exfiltration",
+    "obfuscation",
+    "destructive",
+    "prompt-injection",
+    "tool-poisoning",
+    "permissions"
+  ],
+  "source": "afw-examples",
+  "provenance": "First-party seed case authored by the AFW maintainers. Supplement with independent/community cases before headline neutral claims.",
+  "references": [
+    "OWASP-LLM01",
+    "MITRE-ATLAS"
+  ]
+}

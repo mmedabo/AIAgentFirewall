@@ -1,0 +1,14 @@
+{
+  "id": "insecure-a2a",
+  "title": "Agent card advertising unauthenticated inter-agent skills",
+  "artifact": "../../../examples/insecure-a2a",
+  "label": "malicious",
+  "threat_classes": [
+    "inter-agent"
+  ],
+  "source": "afw-examples",
+  "provenance": "First-party seed case authored by the AFW maintainers. Supplement with independent/community cases before headline neutral claims.",
+  "references": [
+    "A2A"
+  ]
+}

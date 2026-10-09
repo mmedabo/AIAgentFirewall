@@ -1,0 +1,19 @@
+{
+  "id": "poisoned-mcp",
+  "title": "MCP server with poisoned tool descriptions and embedded secrets",
+  "artifact": "../../../examples/poisoned-mcp",
+  "label": "malicious",
+  "threat_classes": [
+    "tool-poisoning",
+    "embedded-secret",
+    "exfiltration",
+    "secret-access",
+    "prompt-injection",
+    "permissions"
+  ],
+  "source": "afw-examples",
+  "provenance": "First-party seed case authored by the AFW maintainers. Supplement with independent/community cases before headline neutral claims.",
+  "references": [
+    "MCP:tool-poisoning"
+  ]
+}

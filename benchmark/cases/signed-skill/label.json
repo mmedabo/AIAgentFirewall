@@ -1,0 +1,10 @@
+{
+  "id": "signed-skill",
+  "title": "A signed, attested skill with an SBOM",
+  "artifact": "../../../examples/signed-skill",
+  "label": "benign",
+  "threat_classes": [],
+  "source": "afw-examples",
+  "provenance": "First-party seed case authored by the AFW maintainers. Supplement with independent/community cases before headline neutral claims.",
+  "references": []
+}

@@ -1,0 +1,14 @@
+{
+  "id": "rag-poisoning-app",
+  "title": "Untrusted content ingested into a shared vector store",
+  "artifact": "../../../examples/rag-poisoning-app",
+  "label": "malicious",
+  "threat_classes": [
+    "rag-poisoning"
+  ],
+  "source": "afw-examples",
+  "provenance": "First-party seed case authored by the AFW maintainers. Supplement with independent/community cases before headline neutral claims.",
+  "references": [
+    "OWASP-LLM08"
+  ]
+}

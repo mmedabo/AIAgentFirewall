@@ -1,0 +1,10 @@
+{
+  "id": "safe-skill",
+  "title": "A legitimate table-of-contents skill",
+  "artifact": "../../../examples/safe-skill",
+  "label": "benign",
+  "threat_classes": [],
+  "source": "afw-examples",
+  "provenance": "First-party seed case authored by the AFW maintainers. Supplement with independent/community cases before headline neutral claims.",
+  "references": []
+}

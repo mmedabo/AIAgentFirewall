@@ -1,0 +1,10 @@
+{
+  "id": "guarded-agent-app",
+  "title": "A deployed agent with scoped tools and server-side authz",
+  "artifact": "../../../examples/guarded-agent-app",
+  "label": "benign",
+  "threat_classes": [],
+  "source": "afw-examples",
+  "provenance": "First-party seed case authored by the AFW maintainers. Supplement with independent/community cases before headline neutral claims.",
+  "references": []
+}

@@ -1,0 +1,14 @@
+{
+  "id": "insecure-mcp",
+  "title": "Unauthenticated / plaintext MCP server (2026 MCP-CVE class)",
+  "artifact": "../../../examples/insecure-mcp",
+  "label": "malicious",
+  "threat_classes": [
+    "permissions"
+  ],
+  "source": "afw-examples",
+  "provenance": "First-party seed case authored by the AFW maintainers. Supplement with independent/community cases before headline neutral claims.",
+  "references": [
+    "MCP:unauthenticated"
+  ]
+}
